@@ -1,53 +1,3 @@
-function editCode([string]$type="",[string]$file=""){
-    $guiEdit="${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
-    $cmdEdit="$env:USERPROFILE\Documents\Programming\nvim-win64\Neovim\bin\nvim.exe"
-
-    #Write-Host $guiEdit
-    #Write-Host $cmdEdit
-
-    if (Test-Path -Path $file){
-        if ($type.ToUpper() -eq "GUI"){
-            if ($file -ne ""){
-                & $guiEdit $file
-            } else {
-                & $guiEdit
-            }
-        } elseif ($type.ToUpper() -eq "CMD"){
-            if ($file -ne ""){
-                & $cmdEdit $cmdEditConfig $file
-            } else {
-                & $cmdEdit $cmdEditConfig
-            }
-        } else {
-            Write-Host 
-            Write-Host "!> Invalid type parameter: '"$type"'"
-            Write-Host " >Possible type parameters are:"
-            Write-Host "  . GUI: To launch a gui text editor"
-            Write-Host "  . CMD: To launch a cmd text editor"
-        }
-    } else {
-        Write-Host "!> Given file does not exist."
-    }
-}
-
-function runCode([string]$operationType="",[string]$file=""){
-	$originalDir=Get-Location
-    $buildAndRunPath="$env:USERPROFILE\Documents\Programming\C Programms\BuildAndRun\Version1"
-    $buildAndRunAbsPath="$env:USERPROFILE\Documents\Programming\C Programms\BuildAndRun\Version1\BuildAndRun.exe"
-    
-    # Write-Host "File "$file
-	# Write-Host "Origdir: " $originalDir
-	
-    if (Test-Path -path $file){
-		Set-Location $buildAndRunPath	#TODO - Get rid of this shit and make build and run a full application.
-		& $buildAndRunAbsPath $operationType $file
-		Set-Location $originalDir
-    } else {
-        Write-Host
-        Write-Host "!> Given file does not exist."
-    }
-}
-
 function viewPicture([string]$file){
 	[void][reflection.assembly]::LoadWithPartialName("System.Windows.Forms")
 	[System.Windows.Forms.Application]::EnableVisualStyles();
@@ -161,6 +111,4 @@ function viewPicture([string]$file){
 
 }
 
-Set-Alias -Name Edit-Code -Value editCode
-Set-Alias -Name Run-Code -value runCode
 Set-Alias -Name View-Picture -Value viewPicture
